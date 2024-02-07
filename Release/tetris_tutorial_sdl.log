@@ -1,0 +1,8 @@
+﻿  Game.cpp
+     Creating library C:\Users\matth\Downloads\tetris_tutorial_sdl\tetris_tutorial_sdl\Release\tetris_tutorial_sdl.lib and object C:\Users\matth\Downloads\tetris_tutorial_sdl\tetris_tutorial_sdl\Release\tetris_tutorial_sdl.exp
+  Generating code
+  4 of 37 functions (10.8%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  tetris_tutorial_sdl.vcxproj -> C:\Users\matth\Downloads\tetris_tutorial_sdl\tetris_tutorial_sdl\Release\tetris_tutorial_sdl.exe
