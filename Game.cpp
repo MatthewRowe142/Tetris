@@ -134,9 +134,14 @@ void Game::DrawPiece (int pX, int pY, int pPiece, int pRotation, bool ghost)
 	int mPixelsX = mBoard->GetXPosInPixels (pX);
 	int mPixelsY = mBoard->GetYPosInPixels (pY);
 
+	int previousCol[5] = {0, 0, 0, 0, 0};
+	int previousBlock = 0;
+
+
 	// Travel the matrix of blocks of the piece and draw the blocks that are filled
 	for (int i = 0; i < PIECE_BLOCKS; i++)
 	{
+		previousBlock = 0;
 		for (int j = 0; j < PIECE_BLOCKS; j++)
 		{
 			/*switch (mPieces->GetBlockType(pPiece, pRotation, j, i))
@@ -147,20 +152,48 @@ void Game::DrawPiece (int pX, int pY, int pPiece, int pRotation, bool ghost)
 
 			mColor = GREEN;
 
+
 			if (mPieces->GetBlockType(pPiece, pRotation, j, i) != 0)
 			{
-				if(ghost)
-					mIO->DrawRectangle(mPixelsX + i * BLOCK_SIZE,
-						mPixelsY + j * BLOCK_SIZE,
-						(mPixelsX + i * BLOCK_SIZE) + BLOCK_SIZE - 1,
-						(mPixelsY + j * BLOCK_SIZE) + BLOCK_SIZE - 1,
-						mColor);
+				if (ghost)
+				{
+					if (previousBlock == 0)
+						mIO->DrawAAEdge(mPixelsX + i * BLOCK_SIZE,
+							mPixelsY + j * BLOCK_SIZE,
+							(mPixelsX + i * BLOCK_SIZE) + BLOCK_SIZE,
+							(mPixelsY + j * BLOCK_SIZE),
+							mColor);
+					if (previousCol[j] == 0)
+						mIO->DrawEdge(mPixelsX + i * BLOCK_SIZE,
+							mPixelsY + j * BLOCK_SIZE,
+							(mPixelsX + i * BLOCK_SIZE),
+							(mPixelsY + j * BLOCK_SIZE) + BLOCK_SIZE,
+							mColor);
+					previousCol[j] = 1;
+					previousBlock = 1;
+				}
 				else
 					mIO->DrawBox(mPixelsX + i * BLOCK_SIZE,
 						mPixelsY + j * BLOCK_SIZE,
-						(mPixelsX + i * BLOCK_SIZE) + BLOCK_SIZE - 1,
-						(mPixelsY + j * BLOCK_SIZE) + BLOCK_SIZE - 1,
+						(mPixelsX + i * BLOCK_SIZE) + BLOCK_SIZE,
+						(mPixelsY + j * BLOCK_SIZE) + BLOCK_SIZE,
 						mColor);
+			}
+			else if(ghost){
+				if (previousBlock == 1)
+					mIO->DrawAAEdge(mPixelsX + i * BLOCK_SIZE,
+						mPixelsY + j * BLOCK_SIZE,
+						(mPixelsX + i * BLOCK_SIZE) + BLOCK_SIZE,
+						(mPixelsY + j * BLOCK_SIZE),
+						mColor);
+				if (previousCol[j] == 1)
+					mIO->DrawEdge(mPixelsX + i * BLOCK_SIZE,
+						mPixelsY + j * BLOCK_SIZE,
+						(mPixelsX + i * BLOCK_SIZE),
+						(mPixelsY + j * BLOCK_SIZE) + BLOCK_SIZE,
+						mColor);
+				previousCol[j] = 0;
+				previousBlock = 0;
 			}
 				
 		}
@@ -202,8 +235,8 @@ void Game::DrawBoard ()
 			if (!mBoard->IsFreeBlock(i, j))	
 				mIO->DrawBox (	mX1 + i * BLOCK_SIZE, 
 										mY + j * BLOCK_SIZE, 
-										(mX1 + i * BLOCK_SIZE) + BLOCK_SIZE - 1, 
-										(mY + j * BLOCK_SIZE) + BLOCK_SIZE - 1, 
+										(mX1 + i * BLOCK_SIZE) + BLOCK_SIZE, 
+										(mY + j * BLOCK_SIZE) + BLOCK_SIZE, 
 										RED);
 		}
 	}	

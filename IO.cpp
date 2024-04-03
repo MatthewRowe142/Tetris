@@ -71,6 +71,16 @@ void IO::DrawRectangle(int pX1, int pY1, int pX2, int pY2, enum color pC)
 	rectangleColor(mScreen, pX1, pY1, pX2, pY2 - 1, mColors[pC]);
 }
 
+void IO::DrawEdge(int pX1, int pY1, int pX2, int pY2, enum color pC)
+{
+	lineColor(mScreen, pX1, pY1, pX2, pY2 - 1, mColors[pC]);
+}
+
+void IO::DrawAAEdge(int pX1, int pY1, int pX2, int pY2, enum color pC)
+{
+	aalineColor(mScreen, pX1, pY1, pX2, pY2 - 1, mColors[pC]);
+}
+
 
 /* 
 ======================================									

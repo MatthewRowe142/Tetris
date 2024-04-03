@@ -49,7 +49,9 @@ public:
 	IO						();
 
 	void DrawBox		(int pX1, int pY1, int pX2, int pY2, enum color pC);
-	void DrawRectangle  (int pX1, int pY1, int pX2, int pY2, enum color pC);
+	void DrawRectangle(int pX1, int pY1, int pX2, int pY2, enum color pC);
+	void DrawEdge(int pX1, int pY1, int pX2, int pY2, enum color pC);
+	void DrawAAEdge(int pX1, int pY1, int pX2, int pY2, enum color pC);
 	void ClearScreen		();
 	int GetScreenHeight		();
 	int InitGraph			();
