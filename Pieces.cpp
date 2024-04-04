@@ -2,14 +2,14 @@
 /* File: Pieces.cpp
 /* Desc: All the Tetris pieces with their respective rotations and displacements for the hotspot
 /*
-/* gametuto.com - Javier López López (javilop.com)
+/* gametuto.com - Javier Lï¿½pez Lï¿½pez (javilop.com)
 /*
 /*****************************************************************************************
 /*
 /* Creative Commons - Attribution 3.0 Unported
 /* You are free:
-/*	to Share — to copy, distribute and transmit the work
-/*	to Remix — to adapt the work
+/*	to Share ï¿½ to copy, distribute and transmit the work
+/*	to Remix ï¿½ to adapt the work
 /*
 /* Under the following conditions:
 /* Attribution. You must attribute the work in the manner specified by the author or licensor 

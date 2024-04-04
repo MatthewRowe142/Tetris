@@ -2,17 +2,17 @@
 /* File: Game.cpp
 /* Desc: General class for the game
 /*
-/* gametuto.com - Javier López López (javilop.com)
+/* gametuto.com - Javier Lï¿½pez Lï¿½pez (javilop.com)
 /*
 /*****************************************************************************************
 /*
 /* Creative Commons - Attribution 3.0 Unported
 /* You are free:
-/*	to Share — to copy, distribute and transmit the work
-/*	to Remix — to adapt the work
+/*	to Share ï¿½ to copy, distribute and transmit the work
+/*	to Remix ï¿½ to adapt the work
 /*
 /* Under the following conditions:
-/* Attribution. You must attribute the work in the manner specified by the author or licensor 
+/* Attribution. You must attribute the work in the manner specified by the author or licensor
 /* (but not in any way that suggests that they endorse you or your use of the work).
 /*
 /*****************************************************************************************/
@@ -24,12 +24,12 @@
 #include "Game.h"
 
 
-/* 
-======================================									
+/*
+======================================
 Init
-====================================== 
+======================================
 */
-Game::Game(Board *pBoard, Pieces *pPieces, IO *pIO, int pScreenHeight) 
+Game::Game(Board* pBoard, Pieces* pPieces, IO* pIO, int pScreenHeight)
 {
 	mScreenHeight = pScreenHeight;
 
@@ -39,40 +39,40 @@ Game::Game(Board *pBoard, Pieces *pPieces, IO *pIO, int pScreenHeight)
 	mIO = pIO;
 
 	// Game initialization
-	InitGame ();
+	InitGame();
 }
 
 
-/* 
-======================================									
+/*
+======================================
 Get a random int between to integers
 
 Parameters:
 >> pA: First number
 >> pB: Second number
-====================================== 
+======================================
 */
-int Game::GetRand (int pA, int pB)
+int Game::GetRand(int pA, int pB)
 {
-	return rand () % (pB - pA + 1) + pA;
+	return rand() % (pB - pA + 1) + pA;
 }
 
 
-/* 
-======================================									
+/*
+======================================
 Initial parameters of the game
-====================================== 
+======================================
 */
 void Game::InitGame()
 {
 	// Init random numbers
-	srand ((unsigned int) time(NULL));
+	srand((unsigned int)time(NULL));
 
 	// First piece
-	mPiece			= GetRand (0, 6);
-	mRotation		= GetRand (0, 3);
-	mPosX 			= (BOARD_WIDTH / 2) + mPieces->GetXInitialPosition (mPiece, mRotation);
-	mPosY 			= mPieces->GetYInitialPosition (mPiece, mRotation);
+	mPiece = GetRand(0, 6);
+	mRotation = GetRand(0, 3);
+	mPosX = (BOARD_WIDTH / 2) + mPieces->GetXInitialPosition(mPiece, mRotation);
+	mPosY = mPieces->GetYInitialPosition(mPiece, mRotation);
 
 	mGhostPosY = mPosY;
 	while (mBoard->IsPossibleMovement(mPosX, mGhostPosY + 1, mPiece, mRotation))
@@ -80,10 +80,10 @@ void Game::InitGame()
 
 
 	//  Next piece
-	mNextPiece 		= GetRand (0, 6);
-	mNextRotation 	= GetRand (0, 3);
-	mNextPosX 		= BOARD_WIDTH + 5;
-	mNextPosY 		= 5;	
+	mNextPiece = GetRand(0, 6);
+	mNextRotation = GetRand(0, 3);
+	mNextPosX = BOARD_WIDTH + 5;
+	mNextPosY = 5;
 
 	mHoldPiece = -1;
 	mHoldPosX = -10;
@@ -91,31 +91,31 @@ void Game::InitGame()
 }
 
 
-/* 
-======================================									
+/*
+======================================
 Create a random piece
-====================================== 
+======================================
 */
 void Game::CreateNewPiece()
 {
 	// The new piece
-	mPiece			= mNextPiece;
-	mRotation		= mNextRotation;
-	mPosX 			= (BOARD_WIDTH / 2) + mPieces->GetXInitialPosition (mPiece, mRotation);
-	mPosY 			= mPieces->GetYInitialPosition (mPiece, mRotation);
+	mPiece = mNextPiece;
+	mRotation = mNextRotation;
+	mPosX = (BOARD_WIDTH / 2) + mPieces->GetXInitialPosition(mPiece, mRotation);
+	mPosY = mPieces->GetYInitialPosition(mPiece, mRotation);
 
 	mGhostPosY = mPosY;
 	while (mBoard->IsPossibleMovement(mPosX, mGhostPosY + 1, mPiece, mRotation))
 		mGhostPosY++;
 
 	// Random next piece
-	mNextPiece 		= GetRand (0, 6);
-	mNextRotation 	= GetRand (0, 3);
+	mNextPiece = GetRand(0, 6);
+	mNextRotation = GetRand(0, 3);
 }
 
 
-/* 
-======================================									
+/*
+======================================
 Draw piece
 
 Parameters:
@@ -124,18 +124,29 @@ Parameters:
 >> pY:		Vertical position in blocks
 >> pPiece:	Piece to draw
 >> pRotation:	1 of the 4 possible rotations
-====================================== 
+======================================
 */
-void Game::DrawPiece (int pX, int pY, int pPiece, int pRotation, bool ghost)
+void Game::DrawPiece(int pX, int pY, int pPiece, int pRotation, bool ghost)
 {
 	color mColor;				// Color of the block 
 
 	// Obtain the position in pixel in the screen of the block we want to draw
-	int mPixelsX = mBoard->GetXPosInPixels (pX);
-	int mPixelsY = mBoard->GetYPosInPixels (pY);
+	int mPixelsX = mBoard->GetXPosInPixels(pX);
+	int mPixelsY = mBoard->GetYPosInPixels(pY);
 
-	int previousCol[5] = {0, 0, 0, 0, 0};
+	int previousCol[5] = { 0, 0, 0, 0, 0 };
 	int previousBlock = 0;
+
+	switch (pPiece)
+	{
+	case 0: mColor = GREEN; break;
+	case 1: mColor = BLUE; break;
+	case 2: mColor = CYAN; break;
+	case 3: mColor = MAGENTA; break;
+	case 4: mColor = YELLOW; break;
+	case 5: mColor = RED; break;
+	case 6: mColor = BLUE; break;
+	}
 
 
 	// Travel the matrix of blocks of the piece and draw the blocks that are filled
@@ -149,9 +160,6 @@ void Game::DrawPiece (int pX, int pY, int pPiece, int pRotation, bool ghost)
 				case 1: mColor = GREEN; break;	// For each block of the piece except the pivot
 				case 2: mColor = BLUE; break;	// For the pivot
 			}*/
-
-			mColor = GREEN;
-
 
 			if (mPieces->GetBlockType(pPiece, pRotation, j, i) != 0)
 			{
@@ -179,7 +187,7 @@ void Game::DrawPiece (int pX, int pY, int pPiece, int pRotation, bool ghost)
 						(mPixelsY + j * BLOCK_SIZE) + BLOCK_SIZE,
 						mColor);
 			}
-			else if(ghost){
+			else if (ghost) {
 				if (previousBlock == 1)
 					mIO->DrawAAEdge(mPixelsX + i * BLOCK_SIZE,
 						mPixelsY + j * BLOCK_SIZE,
@@ -195,33 +203,33 @@ void Game::DrawPiece (int pX, int pY, int pPiece, int pRotation, bool ghost)
 				previousCol[j] = 0;
 				previousBlock = 0;
 			}
-				
+
 		}
 	}
 }
 
 
-/* 
-======================================									
+/*
+======================================
 Draw board
 
 Draw the two lines that delimit the board
-====================================== 
+======================================
 */
-void Game::DrawBoard ()
+void Game::DrawBoard()
 {
 	// Calculate the limits of the board in pixels	
 	int mX1 = BOARD_POSITION - (BLOCK_SIZE * (BOARD_WIDTH / 2)) - 1;
 	int mX2 = BOARD_POSITION + (BLOCK_SIZE * (BOARD_WIDTH / 2));
 	int mY = mScreenHeight - (BLOCK_SIZE * BOARD_HEIGHT);
-	
+
 	// Check that the vertical margin is not to small
 	//assert (mY > MIN_VERTICAL_MARGIN);
 
 	// Rectangles that delimits the board
-	mIO->DrawBox (mX1 - BOARD_LINE_WIDTH, mY, mX1, mScreenHeight - 1, BLUE);
-	mIO->DrawBox (mX2, mY, mX2 + BOARD_LINE_WIDTH, mScreenHeight - 1, BLUE);
-	
+	mIO->DrawBox(mX1 - BOARD_LINE_WIDTH, mY, mX1, mScreenHeight - 1, BLUE);
+	mIO->DrawBox(mX2, mY, mX2 + BOARD_LINE_WIDTH, mScreenHeight - 1, BLUE);
+
 	// Check that the horizontal margin is not to small
 	//assert (mX1 > MIN_HORIZONTAL_MARGIN);
 
@@ -230,33 +238,44 @@ void Game::DrawBoard ()
 	for (int i = 0; i < BOARD_WIDTH; i++)
 	{
 		for (int j = 0; j < BOARD_HEIGHT; j++)
-		{	
+		{
+			color mColor;
+			switch (mBoard->GetBlock(i, j))
+			{
+			case 0: mColor = GREEN; break;
+			case 1: mColor = BLUE; break;
+			case 2: mColor = CYAN; break;
+			case 3: mColor = MAGENTA; break;
+			case 4: mColor = YELLOW; break;
+			case 5: mColor = RED; break;
+			case 6: mColor = BLUE; break;
+			}
 			// Check if the block is filled, if so, draw it
-			if (!mBoard->IsFreeBlock(i, j))	
-				mIO->DrawBox (	mX1 + i * BLOCK_SIZE, 
-										mY + j * BLOCK_SIZE, 
-										(mX1 + i * BLOCK_SIZE) + BLOCK_SIZE, 
-										(mY + j * BLOCK_SIZE) + BLOCK_SIZE, 
-										RED);
+			if (!mBoard->IsFreeBlock(i, j))
+				mIO->DrawBox(mX1 + i * BLOCK_SIZE,
+					mY + j * BLOCK_SIZE,
+					(mX1 + i * BLOCK_SIZE) + BLOCK_SIZE,
+					(mY + j * BLOCK_SIZE) + BLOCK_SIZE,
+					mColor);
 		}
-	}	
+	}
 }
 
 
-/* 
-======================================									
+/*
+======================================
 Draw scene
 
 Draw all the objects of the scene
-====================================== 
+======================================
 */
-void Game::DrawScene ()
+void Game::DrawScene()
 {
-	DrawBoard ();													// Draw the delimitation lines and blocks stored in the board
-	DrawPiece (mPosX, mPosY, mPiece, mRotation, false);					// Draw the playing piece
-	DrawPiece (mNextPosX, mNextPosY, mNextPiece, mNextRotation,false);	// Draw the next piece
-	DrawPiece (mPosX, mGhostPosY, mPiece, mRotation,true);
-	if(mHoldPiece != -1)
+	DrawBoard();													// Draw the delimitation lines and blocks stored in the board
+	DrawPiece(mPosX, mPosY, mPiece, mRotation, false);					// Draw the playing piece
+	DrawPiece(mNextPosX, mNextPosY, mNextPiece, mNextRotation, false);	// Draw the next piece
+	DrawPiece(mPosX, mGhostPosY, mPiece, mRotation, true);
+	if (mHoldPiece != -1)
 		DrawPiece(mHoldPosX, mHoldPosY, mHoldPiece, mHoldRotation, false);
 }
 

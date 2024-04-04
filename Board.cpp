@@ -48,7 +48,7 @@ void Board::InitBoard()
 {
 	for (int i = 0; i < BOARD_WIDTH; i++)
 		for (int j = 0; j < BOARD_HEIGHT; j++)
-			mBoard[i][j] = POS_FREE;
+			mBoard[i][j] = 0;
 }
 
 /* 
@@ -72,7 +72,7 @@ void Board::StorePiece (int pX, int pY, int pPiece, int pRotation)
 		{	
 			// Store only the blocks of the piece that are not holes
 			if (mPieces->GetBlockType (pPiece, pRotation, j2, i2) != 0)		
-				mBoard[i1][j1] = POS_FILLED;	
+				mBoard[i1][j1] = pPiece+1;	
 		}
 	}
 }
@@ -90,7 +90,7 @@ bool Board::IsGameOver()
 	//If the first line has blocks, then, game over
 	for (int i = 0; i < BOARD_WIDTH; i++)
 	{
-		if (mBoard[i][0] == POS_FILLED) return true;
+		if (mBoard[i][0] != 0) return true;
 	}
 
 	return false;
@@ -131,7 +131,7 @@ void Board::DeletePossibleLines ()
 		int i = 0;
 		while (i < BOARD_WIDTH)
 		{
-			if (mBoard[i][j] != POS_FILLED) break;
+			if (mBoard[i][j] == 0) break;
 			i++;
 		}
 
@@ -140,19 +140,14 @@ void Board::DeletePossibleLines ()
 }
 
 
-/* 
-======================================									
-Returns 1 (true) if the this block of the board is empty, 0 if it is filled
-
-Parameters:
-
->> pX:		Horizontal position in blocks
->> pY:		Vertical position in blocks
-====================================== 
-*/
-bool Board::IsFreeBlock (int pX, int pY)
+bool Board::IsFreeBlock(int pX, int pY)
 {
-	if (mBoard [pX][pY] == POS_FREE) return true; else return false;
+	if (mBoard[pX][pY] == 0) return true; else return false;
+}
+
+int Board::GetBlock(int pX, int pY)
+{
+	return mBoard[pX][pY] - 1;
 }
 
 

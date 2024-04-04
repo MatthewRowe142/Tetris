@@ -48,7 +48,8 @@ public:
 
 	int GetXPosInPixels			(int pPos);
 	int GetYPosInPixels			(int pPos);
-	bool IsFreeBlock			(int pX, int pY);
+	bool IsFreeBlock(int pX, int pY);
+	int GetBlock			(int pX, int pY);
 	bool IsPossibleMovement		(int pX, int pY, int pPiece, int pRotation);
 	void StorePiece				(int pX, int pY, int pPiece, int pRotation);
 	void DeletePossibleLines	();
@@ -56,7 +57,6 @@ public:
 
 private:
 
-	enum { POS_FREE, POS_FILLED };			// POS_FREE = free position of the board; POS_FILLED = filled position of the board
 	int mBoard [BOARD_WIDTH][BOARD_HEIGHT];	// Board that contains the pieces
 	Pieces *mPieces;
 	int mScreenHeight;

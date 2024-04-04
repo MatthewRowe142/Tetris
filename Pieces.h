@@ -12,7 +12,7 @@
 /*	to Remix — to adapt the work
 /*
 /* Under the following conditions:
-/* Attribution. You must attribute the work in the manner specified by the author or licensor 
+/* Attribution. You must attribute the work in the manner specified by the author or licensor
 /* (but not in any way that suggests that they endorse you or your use of the work).
 /*
 /*****************************************************************************************/
@@ -29,9 +29,9 @@ class Pieces
 {
 public:
 
-	int GetBlockType		(int pPiece, int pRotation, int pX, int pY);
-	int GetXInitialPosition (int pPiece, int pRotation);
-	int GetYInitialPosition (int pPiece, int pRotation);
+	int GetBlockType(int pPiece, int pRotation, int pX, int pY);
+	int GetXInitialPosition(int pPiece, int pRotation);
+	int GetYInitialPosition(int pPiece, int pRotation);
 };
 
 #endif // _PIECES_
